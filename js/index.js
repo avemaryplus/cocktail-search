@@ -106,3 +106,21 @@ async function renderModal(cocktail) {
   await getListIngredients(cocktail, ingredientList);
 }
 
+async function toSubmit(event) {
+  loader.style.display = 'block';
+  event.preventDefault();
+  const query = searchInput.value.trim();
+  if (query !== '') {
+    const cocktails = await getCocktails(query);
+    showCocktails(cocktails);
+  } else {
+    cocktailList.innerHTML = `<div class="alert alert-danger" role="alert">
+    Nothing found!
+    Please enter a more correct query
+    </div>`;
+  }
+  loader.style.display = 'none';
+}
+
+
+searchForm.addEventListener("submit", toSubmit)
