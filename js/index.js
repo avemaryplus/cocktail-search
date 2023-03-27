@@ -56,3 +56,53 @@ async function showCocktails(cocktails) {
   }
 }
 
+async function getIngredientImage(name) {
+  try {
+    const url = (`https://www.thecocktaildb.com/images/ingredients/${name}-Small.png`);
+    const response = await fetch(url);
+    if (response.ok) {
+      return response.url;
+    } else {
+      throw new Error('Unable to load ingredient image');
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getListIngredients(cocktail, ingredientList) {
+  for (let i = 1; i <= 15; i++) {
+    if (cocktail[`strIngredient${i}`]) {
+      const ingredient = document.createElement('li');
+      const ingredientName = cocktail[`strIngredient${i}`];
+      const ingredientImg = await getIngredientImage(ingredientName);
+      if (cocktail[`strMeasure${i}`]) {
+        const ingredientMeasure = cocktail[`strMeasure${i}`];
+        ingredient.innerHTML = `<img src="${ingredientImg}" alt="${ingredientName}" class="ingredient-img"><b>${ingredientName}</b> (${ingredientMeasure})`;
+        ingredientList.append(ingredient);
+      } else {
+        ingredient.innerHTML = `<img src="${ingredientImg}" alt="${ingredientName}" class="ingredient-img">${ingredientName}`;
+        ingredientList.append(ingredient);
+      }
+    } else {
+      break;
+    }
+  }
+}
+
+
+async function renderModal(cocktail) {
+  const modalContent = document.querySelector('.modal-body');
+  modalContent.innerHTML = '';
+  const modalTitle = document.querySelector('.modal-title');
+  modalTitle.textContent = `Cocktail Info - ${cocktail.strDrink}`;
+  const ingredientList = document.createElement('ul');
+  const modalInstructions = document.createElement('div');
+  ingredientList.innerHTML = ('<h3>Ingredients:</h3>');
+  modalInstructions.innerHTML = (`<h3>Instructions:</h3>
+   <p>${cocktail.strInstructions}</p>`);
+  modalContent.append(ingredientList);
+  modalContent.append(modalInstructions);
+  await getListIngredients(cocktail, ingredientList);
+}
+
