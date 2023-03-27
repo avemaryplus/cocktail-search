@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,8 +9,44 @@
   <link rel="stylesheet" href="vender/bootstrap/css/bootstrap.css">
   <title>Document</title>
 </head>
+
 <body>
+
+  <div id="preloader">
+    <div class="loader"></div>
+  </div>
+
+  <nav class="navbar bg-dark bg-gradient p-4">
+    <div class="container-sm">
+      <h1 class="text-white">Cocktail search</h1>
+      <form class="d-flex" id="search-form" role="search">
+        <input class="form-control me-3" id="search-input" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-danger" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+
+  <div class="container-sm mt-5">
+    <div class="row row-cols-1 row-cols-md-4 row-cols-sm-2 g-5 justify-content-center" id="cocktail-list"></div>
+  </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title fs-3" id="exampleModalLabel"></h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="js/index.js"></script>
   <script src="vender/bootstrap/js/bootstrap.bundle.js"></script>
 </body>
+
 </html>
