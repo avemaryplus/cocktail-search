@@ -27,4 +27,32 @@ async function getCocktails(query) {
   }
 }
 
+async function showCocktails(cocktails) {
+  cocktailList.innerHTML = '';
+  try {
+    cocktails.forEach(cocktail => {
+      const listItem = document.createElement('div');
+      listItem.setAttribute('data-bs-toggle', 'modal');
+      listItem.setAttribute('data-bs-target', '#exampleModal');
+      listItem.innerHTML = `
+      <div class="col">
+        <div class="card text-bg-dark h-100">
+        <img src="${cocktail.strDrinkThumb}" class="card-img-top" alt="${cocktail.strDrink}">
+          <div class="card-body">
+      <h2 class="cocktail-title fs-4">${cocktail.strDrink}</h2>
+          </div>
+        </div>
+      </div>
+      `;
+      cocktailList.append(listItem);
+      listItem.addEventListener('click', async () => await renderModal(cocktail));
+    });
+  } catch (error) {
+    console.log(error);
+    cocktailList.innerHTML = `<div class="alert alert-danger" role="alert">
+    Nothing found!
+    Please enter a more correct query
+    </div>`;
+  }
+}
 
